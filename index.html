@@ -4,237 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ASTRO — Cosmic Bedroom</title>
-    <meta
-      name="description"
-      content="ASTRO is a cinematic black-hole themed WebOS environment floating inside a dreamy cosmic bedroom."
-    />
+    <meta name="description" content="A dreamy cosmic bedroom dashboard for notes, weather, facts and ambient music." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body data-theme="dreamy">
     <div class="stars" aria-hidden="true"></div>
-    <div class="dust" aria-hidden="true"></div>
-
-    <main class="room-shell">
-      <div class="halo glow-violet"></div>
-      <div class="halo glow-indigo"></div>
-
-      <header class="topbar glass-panel">
-        <div class="brand-wrap">
-          <div class="brand-mark">A</div>
-          <div>
-            <div class="eyebrow">Comfort orbit</div>
-            <h1>ASTRO</h1>
-          </div>
-        </div>
-
-        <div class="topbar-actions">
-          <div class="status-pill" id="timePill">7:42 PM</div>
-          <button class="ghost-button" id="modeToggle">Dawn mode</button>
-        </div>
+    <div class="room">
+      <header class="topbar">
+        <div class="brand"><span class="brand-star">✦</span><div><small>COMFORT ORBIT</small><h1>ASTRO</h1><p>lost in the black hole, found in myself ♡</p></div></div>
+        <div class="top-actions"><span id="timePill">11:34 AM</span><button id="modeToggle">Dawn mode</button></div>
       </header>
 
-      <section class="scene-area">
-        <div class="black-hole-wrap">
-          <div class="black-hole-shadow"></div>
-          <div class="accretion-ring ring-outer"></div>
-          <div class="accretion-ring ring-inner"></div>
-          <div class="black-hole-core"></div>
-          <div class="event-horizon"></div>
-        </div>
+      <main class="workspace">
+        <div class="black-hole" aria-hidden="true"><div class="black-hole-ring"></div><div class="black-hole-core"></div></div>
+        <div class="card weather-card glass"><small>Today's Weather ✧</small><div class="weather-main"><span class="weather-icon">☁️</span><strong>24°</strong></div><b>Partly Cloudy</b><p>Feels like 22°<br />H: 26° · L: 18°</p><div class="weather-note">A good day to dream bigger. ♡</div></div>
+        <div class="card fact-card glass"><div class="card-title">☆ &nbsp; Space Fact</div><p id="factText">A black hole's gravity is so strong that even light cannot escape from it.</p><button id="nextFact">Next fact →</button></div>
+        <div class="card today-card glass"><div class="card-title">Today <span>⌁</span></div><div class="event"><i></i><span>Study - Physics</span><time>10:00 AM</time></div><div class="event"><i></i><span>Notes - Black Hole Notes</span><time>1:00 PM</time></div><div class="event"><i></i><span>Call Mom</span><time>7:00 PM</time></div><div class="event"><i></i><span>Stargaze</span><time>9:00 PM</time></div></div>
+        <div class="card notes-card glass"><div class="card-title">▧ &nbsp; Notes <button id="saveNote">Save</button></div><textarea id="notesInput" placeholder="Write a little thought for Astro..."></textarea></div>
+        <div class="card music-card glass"><div class="album-art">◒</div><div><small>Cosmic Lullaby</small><p>Lo-fi · Space Vibes</p><div class="player"><button id="musicToggle">▶</button><span>◀◀ &nbsp; ◼ &nbsp; ▶▶</span><span>♡</span></div></div></div>
+        <div class="card gallery-card glass"><div class="card-title">Gallery <button>Collection</button></div><div class="gallery-main" id="galleryMain"></div><div class="gallery-strip" id="galleryStrip"></div></div>
+        <div class="speech">Hey there! ✦<br />What shall we explore today?</div>
+        <div class="astro" aria-label="Astro companion"><div class="ear left"></div><div class="ear right"></div><div class="head"><div class="eye left"></div><div class="eye right"></div><div class="smile"></div></div><div class="body"><div class="belly"></div><div class="paw left"></div><div class="paw right"></div></div></div>
+        <div class="lamp lamp-left">✦</div><div class="lamp lamp-right">✦</div>
+      </main>
 
-        <div class="astro-stage">
-          <div class="astro-shadow"></div>
-          <div class="astro" aria-label="Astro companion">
-            <div class="tail tail-a"></div>
-            <div class="tail tail-b"></div>
-            <div class="ear left"></div>
-            <div class="ear right"></div>
-            <div class="head">
-              <div class="face-mark"></div>
-              <div class="eye left"><span></span></div>
-              <div class="eye right"><span></span></div>
-              <div class="blush left"></div>
-              <div class="blush right"></div>
-              <div class="smile"></div>
-            </div>
-            <div class="body">
-              <div class="belly"></div>
-              <div class="paw left"></div>
-              <div class="paw right"></div>
-              <div class="star-badge"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <aside class="panel-stack">
-        <article class="glass-panel app-panel active" data-panel="notes">
-          <div class="panel-header">
-            <span class="panel-tag">Notes</span>
-            <button class="mini-button">＋</button>
-          </div>
-          <div class="panel-body notes-panel">
-            <textarea id="notesInput" placeholder="Write a little thought for Astro..."></textarea>
-          </div>
-        </article>
-
-        <article class="glass-panel app-panel" data-panel="calendar">
-          <div class="panel-header">
-            <span class="panel-tag">Calendar</span>
-            <button class="mini-button">Today</button>
-          </div>
-          <div class="panel-body calendar-panel">
-            <div class="calendar-header">
-              <button class="nav-button" id="prevMonth">←</button>
-              <div id="monthLabel">September</div>
-              <button class="nav-button" id="nextMonth">→</button>
-            </div>
-            <div class="calendar-weekdays">
-              <span>Sun</span>
-              <span>Mon</span>
-              <span>Tue</span>
-              <span>Wed</span>
-              <span>Thu</span>
-              <span>Fri</span>
-              <span>Sat</span>
-            </div>
-            <div id="calendarGrid" class="calendar-grid"></div>
-          </div>
-        </article>
-
-        <article class="glass-panel app-panel" data-panel="weather">
-          <div class="panel-header">
-            <span class="panel-tag">Weather</span>
-            <button class="mini-button">Live</button>
-          </div>
-          <div class="panel-body weather-panel">
-            <div class="weather-main">
-              <div class="weather-icon">☄</div>
-              <div>
-                <div class="temp">14°C</div>
-                <div class="weather-status">Luminous haze</div>
-              </div>
-            </div>
-            <div class="weather-meta">
-              <div><span>Wind</span><strong>14 km/h</strong></div>
-              <div><span>Humidity</span><strong>68%</strong></div>
-              <div><span>Moon</span><strong>Waxing</strong></div>
-            </div>
-            <div class="forecast" id="forecast"></div>
-          </div>
-        </article>
-
-        <article class="glass-panel app-panel" data-panel="flashcards">
-          <div class="panel-header">
-            <span class="panel-tag">Flashcards</span>
-            <button class="mini-button" id="nextCard">Next</button>
-          </div>
-          <div class="panel-body flashcard-panel">
-            <div class="flashcard" id="flashcard">
-              <div class="flashcard-face face-front">
-                <span class="card-label">Question</span>
-                <h3 id="flashQuestion">What is a nebula?</h3>
-              </div>
-              <div class="flashcard-face face-back">
-                <span class="card-label">Answer</span>
-                <p id="flashAnswer">A cloud of gas and dust where stars are born.</p>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="glass-panel app-panel" data-panel="facts">
-          <div class="panel-header">
-            <span class="panel-tag">Space facts</span>
-            <button class="mini-button" id="nextFact">Refresh</button>
-          </div>
-          <div class="panel-body fact-panel">
-            <div class="fact-quote">“</div>
-            <p id="factText">A day on Venus is longer than a Venus year.</p>
-          </div>
-        </article>
-
-        <article class="glass-panel app-panel" data-panel="gallery">
-          <div class="panel-header">
-            <span class="panel-tag">Gallery</span>
-            <button class="mini-button">Collection</button>
-          </div>
-          <div class="panel-body gallery-panel">
-            <div class="gallery-main" id="galleryMain"></div>
-            <div class="gallery-strip" id="galleryStrip"></div>
-          </div>
-        </article>
-
-        <article class="glass-panel app-panel" data-panel="music">
-          <div class="panel-header">
-            <span class="panel-tag">Ambient</span>
-            <button class="mini-button" id="musicToggle">Play</button>
-          </div>
-          <div class="panel-body music-panel">
-            <div class="track-info">
-              <span class="track-label">Now playing</span>
-              <h3 id="trackName">Luna Drift</h3>
-            </div>
-            <div class="tone-bars">
-              <span></span><span></span><span></span><span></span><span></span><span></span>
-            </div>
-            <input id="volumeControl" type="range" min="0" max="100" value="42" />
-          </div>
-        </article>
-
-        <article class="glass-panel app-panel" data-panel="room">
-          <div class="panel-header">
-            <span class="panel-tag">Room</span>
-            <button class="mini-button">Customize</button>
-          </div>
-          <div class="panel-body room-panel">
-            <div class="room-options">
-              <button class="theme-choice active" data-theme="dreamy">Dreamy</button>
-              <button class="theme-choice" data-theme="dusk">Dusk</button>
-              <button class="theme-choice" data-theme="aurora">Aurora</button>
-            </div>
-            <div class="room-preview">
-              <div class="mini-lamp"></div>
-              <div class="mini-orbit"></div>
-            </div>
-          </div>
-        </article>
-      </aside>
-
-      <nav class="dock glass-panel" aria-label="Application Dock">
-        <button class="dock-button active" data-target="notes" title="Notes">
-          <span>✎</span>
-        </button>
-        <button class="dock-button" data-target="calendar" title="Calendar">
-          <span>☰</span>
-        </button>
-        <button class="dock-button" data-target="weather" title="Weather">
-          <span>☼</span>
-        </button>
-        <button class="dock-button" data-target="flashcards" title="Flashcards">
-          <span>✦</span>
-        </button>
-        <button class="dock-button" data-target="facts" title="Facts">
-          <span>✧</span>
-        </button>
-        <button class="dock-button" data-target="gallery" title="Gallery">
-          <span>◌</span>
-        </button>
-        <button class="dock-button" data-target="music" title="Music">
-          <span>♫</span>
-        </button>
-        <button class="dock-button" data-target="room" title="Room">
-          <span>⌂</span>
-        </button>
-      </nav>
-    </main>
-
+      <nav class="dock glass" aria-label="Application navigation"><button class="active">⌂<small>Home</small></button><button>▤<small>Notes</small></button><button>▣<small>Calendar</small></button><button>☁<small>Weather</small></button><button>♧<small>Flashcards</small></button><button>▧<small>Gallery</small></button><button>♫<small>Music</small></button><button>♙<small>Astro</small></button></nav>
+      <footer>Same universe...<br />Different you ♡</footer>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
