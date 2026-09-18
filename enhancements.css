@@ -1,0 +1,81 @@
+:root {
+  --life-glow: rgba(177, 148, 255, .95);
+  --hole-orange: rgba(255, 181, 123, .95);
+  --hole-violet: rgba(178, 116, 255, .95);
+}
+
+/* Cinematic black-hole treatment */
+.portal-wrap {
+  isolation: isolate;
+  background: radial-gradient(ellipse at 50% 48%, #010107 0 27%, rgba(6, 4, 16, .96) 43%, rgba(15, 10, 31, .62) 64%, transparent 78%);
+}
+.portal-wrap::before,
+.portal-wrap::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%) rotate(-9deg);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.portal-wrap::before {
+  width: 116%; height: 47%;
+  background: conic-gradient(from 202deg, transparent 0 14%, rgba(93, 119, 255, .15) 22%, var(--hole-violet) 34%, var(--hole-orange) 47%, rgba(255, 229, 183, .92) 53%, transparent 67% 100%);
+  filter: blur(18px) saturate(1.55);
+  opacity: .9;
+  z-index: -1;
+}
+.portal-wrap::after {
+  width: 105%; height: 36%;
+  border: 22px solid transparent;
+  border-top-color: rgba(255, 202, 149, .75);
+  border-bottom-color: rgba(125, 133, 255, .72);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  z-index: -1;
+}
+.portal-core {
+  box-shadow: inset 0 0 70px #000, 0 0 22px #000, 0 0 110px rgba(111, 92, 255, .22);
+}
+
+/* More alive Astro: breathing, blinking, ear and tail motion */
+.astro {
+  transform-origin: 50% 88%;
+  animation: astroAlive 4.8s ease-in-out infinite;
+}
+.astro::after {
+  content: "";
+  position: absolute;
+  left: 50%; bottom: -5px;
+  width: 92px; height: 12px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(125, 113, 255, .22);
+  filter: blur(10px);
+  opacity: .6;
+}
+.astro .head { transform-origin: 50% 85%; animation: headSway 5.7s ease-in-out infinite; }
+.astro .ear.left { transform-origin: 100% 90%; animation: earLeft 3.8s ease-in-out infinite; }
+.astro .ear.right { transform-origin: 0 90%; animation: earRight 4.2s ease-in-out infinite; }
+.astro .tail-a { animation: tailLeft 4.1s ease-in-out infinite; transform-origin: 85% 80%; }
+.astro .tail-b { animation: tailRight 4.5s ease-in-out infinite; transform-origin: 15% 80%; }
+.astro .eye { animation: blink 6s infinite; transform-origin: 50% 50%; }
+.astro .eye.right { animation-delay: .12s; }
+.astro .eye span { animation: eyeShine 2.4s ease-in-out infinite; }
+.astro .smile { animation: smile 5s ease-in-out infinite; }
+.astro .star-badge { animation: badgeGlow 2s ease-in-out infinite alternate; }
+
+@keyframes astroAlive { 0%,100% { transform: translateX(-50%) translateY(0) scale(1); } 45% { transform: translateX(-50%) translateY(-7px) scale(1.015, .995); } 60% { transform: translateX(-50%) translateY(-5px) scale(1.02, .99); } }
+@keyframes headSway { 0%,100% { rotate: -1deg; } 50% { rotate: 1.5deg; } }
+@keyframes earLeft { 0%,72%,100% { rotate: -18deg; } 78% { rotate: -29deg; } 85% { rotate: -14deg; } }
+@keyframes earRight { 0%,72%,100% { rotate: 18deg; } 78% { rotate: 29deg; } 85% { rotate: 15deg; } }
+@keyframes tailLeft { 0%,100% { rotate: -2deg; } 50% { rotate: 9deg; } }
+@keyframes tailRight { 0%,100% { rotate: 2deg; } 50% { rotate: -9deg; } }
+@keyframes blink { 0%, 44%, 47%, 100% { scale: 1 1; } 45%,46% { scale: 1 .08; } }
+@keyframes eyeShine { 0%,100% { opacity: .7; transform: translate(0,0); } 50% { opacity: 1; transform: translate(2px,-1px); } }
+@keyframes smile { 0%,100% { scale: 1; } 50% { scale: 1.08 1; } }
+@keyframes badgeGlow { from { filter: drop-shadow(0 0 3px #ffe28f); } to { filter: drop-shadow(0 0 13px #ffe28f); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .portal-ring, .astro, .astro * { animation: none !important; }
+}
