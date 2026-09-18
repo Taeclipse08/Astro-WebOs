@@ -1,71 +1,10 @@
-const timePill = document.getElementById('timePill');
-const modeToggle = document.getElementById('modeToggle');
-const notesInput = document.getElementById('notesInput');
-const factText = document.getElementById('factText');
-const saveNote = document.getElementById('saveNote');
-const nextFact = document.getElementById('nextFact');
-
-const facts = [
-  "A black hole's gravity is so strong that even light cannot escape from it.",
-  'A day on Venus is longer than a Venus year.',
-  'The Milky Way contains hundreds of billions of stars.',
-  'Jupiter is larger than all the other planets combined.'
-];
-
-let factIndex = 0;
-
-function updateTime() {
-  const now = new Date();
-  timePill.textContent = now.toLocaleTimeString([], {
-    hour: 'numeric',
-    minute: '2-digit'
-  });
-}
-
-function changeTheme(theme) {
-  document.body.dataset.theme = theme;
-  const labels = {
-    dreamy: 'Dawn mode',
-    dusk: 'Velvet dusk',
-    aurora: 'Aurora bloom'
-  };
-  modeToggle.textContent = labels[theme] || 'Dawn mode';
-}
-
-function rotateFact() {
-  factIndex = (factIndex + 1) % facts.length;
-  factText.textContent = facts[factIndex];
-}
-
-const savedNotes = localStorage.getItem('astro-notes');
-if (savedNotes) {
-  notesInput.value = savedNotes;
-}
-
-saveNote.addEventListener('click', () => {
-  localStorage.setItem('astro-notes', notesInput.value);
-  saveNote.textContent = 'Saved';
-  window.setTimeout(() => {
-    saveNote.textContent = 'Save';
-  }, 900);
-});
-
-nextFact.addEventListener('click', rotateFact);
-
-modeToggle.addEventListener('click', () => {
-  const themes = ['dreamy', 'dusk', 'aurora'];
-  const current = document.body.dataset.theme || 'dreamy';
-  const next = themes[(themes.indexOf(current) + 1) % themes.length];
-  changeTheme(next);
-});
-
-const dockButtons = document.querySelectorAll('.dock-button');
-dockButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    dockButtons.forEach((btn) => btn.classList.remove('active'));
-    button.classList.add('active');
-  });
-});
-
-updateTime();
-setInterval(updateTime, 30000);
+const $=s=>document.querySelector(s);const $$=s=>[...document.querySelectorAll(s)];
+const timePill=$('#timePill'),modeToggle=$('#modeToggle'),panel=$('#appPanel'),panelTitle=$('#panelTitle'),panelContent=$('#panelContent'),notes=$('#notesInput');
+const facts=["A black hole's gravity is so strong that even light cannot escape from it.",'The Milky Way contains hundreds of billions of stars.','A day on Venus is longer than a Venus year.','Jupiter is larger than all the other planets combined.'];let fact=0;
+function clock(){timePill.textContent=new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}clock();setInterval(clock,30000);
+modeToggle.onclick=()=>{const t=['dreamy','dusk','aurora'],n=t[(t.indexOf(document.body.dataset.theme)+1)%t.length];document.body.dataset.theme=n;modeToggle.textContent=n==='dusk'?'Velvet dusk':n==='aurora'?'Aurora bloom':'Dawn mode'};
+$('#nextFact').onclick=()=>{$('#factText').textContent=facts[fact=(fact+1)%facts.length]};
+const saved=localStorage.getItem('astro-notes');if(saved)notes.value=saved;$('#saveNote').onclick=()=>{localStorage.setItem('astro-notes',notes.value);$('#saveNote').textContent='Saved';setTimeout(()=>$('#saveNote').textContent='Save note',900)};
+const content={calendar:'September 2026 · Sun Mon Tue Wed Thu Fri Sat',weather:'24° · Partly cloudy · Humidity 68%',flashcards:'What is a nebula? Tap Next to reveal the answer.',gallery:'Carina Nebula · Your cosmic collection',music:'Cosmic Lullaby · Lo-fi space vibes',astro:'Astro is awake and watching the stars.'};
+function openPanel(name){if(name==='home'){panel.classList.remove('open');return}panel.classList.add('open');panelTitle.firstChild.textContent=name[0].toUpperCase()+name.slice(1)+' ';panelContent.textContent=content[name]||'';notes.style.display=name==='notes'?'block':'none';$('#saveNote').style.display=name==='notes'?'inline-block':'none'}
+$$('[data-panel]').forEach(btn=>btn.onclick=()=>{ $$('[data-panel]').forEach(x=>x.classList.toggle('active',x===btn));openPanel(btn.dataset.panel)});$('#closePanel').onclick=()=>openPanel('home');$('#musicToggle').onclick=e=>e.currentTarget.textContent=e.currentTarget.textContent==='▶'?'❚❚':'▶';
